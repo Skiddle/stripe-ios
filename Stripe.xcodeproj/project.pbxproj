@@ -25,6 +25,7 @@
 /* Begin PBXBuildFile section */
 		00BB983320601A1C00F257F9 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00BB983120601A1C00F257F9 /* UITextView+Placeholder.m */; };
 		00BB983420601A1C00F257F9 /* UITextView+Placeholder.h in Headers */ = {isa = PBXBuildFile; fileRef = 00BB983220601A1C00F257F9 /* UITextView+Placeholder.h */; };
+		00BB983520601B8100F257F9 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00BB983120601A1C00F257F9 /* UITextView+Placeholder.m */; };
 		0426B96E1CEADC98006AC8DD /* STPColorUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 0426B96C1CEADC98006AC8DD /* STPColorUtils.h */; };
 		0426B96F1CEADC98006AC8DD /* STPColorUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0426B96D1CEADC98006AC8DD /* STPColorUtils.m */; };
 		0426B9721CEAE3EB006AC8DD /* UITableViewCell+Stripe_Borders.h in Headers */ = {isa = PBXBuildFile; fileRef = 0426B9701CEAE3EB006AC8DD /* UITableViewCell+Stripe_Borders.h */; };
@@ -1324,15 +1325,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00BB983020601A1C00F257F9 /* UITextView+Placeholder */ = {
-			isa = PBXGroup;
-			children = (
-				00BB983120601A1C00F257F9 /* UITextView+Placeholder.m */,
-				00BB983220601A1C00F257F9 /* UITextView+Placeholder.h */,
-			);
-			path = "UITextView+Placeholder";
-			sourceTree = "<group>";
-		};
 		0438EF871B741C2800D506CC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1517,7 +1509,6 @@
 		11C74B8D164043050071C2CA = {
 			isa = PBXGroup;
 			children = (
-				00BB983020601A1C00F257F9 /* UITextView+Placeholder */,
 				04CDB4D21A5F30A700B854EE /* Stripe */,
 				04CDB5281A5F3A9300B854EE /* StripeTests */,
 				C1B630B41D1D817900A05285 /* StripeiOSResources */,
@@ -1718,6 +1709,8 @@
 		F1728CEA1EAAA262002E0C29 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				00BB983120601A1C00F257F9 /* UITextView+Placeholder.m */,
+				00BB983220601A1C00F257F9 /* UITextView+Placeholder.h */,
 				04A4C3851C4F25F900B3B290 /* NSArray+Stripe.h */,
 				04A4C3861C4F25F900B3B290 /* NSArray+Stripe.m */,
 				049A3F971CC76A2400F57DE7 /* NSBundle+Stripe_AppName.h */,
@@ -2915,6 +2908,7 @@
 				C126553A1CAA2392006F7265 /* STPAddCardViewController.m in Sources */,
 				04633B151CD4521F009D4FB5 /* STPAPIClient+ApplePay.m in Sources */,
 				0433EB4E1BD06313003912B4 /* NSDictionary+Stripe.m in Sources */,
+				00BB983520601B8100F257F9 /* UITextView+Placeholder.m in Sources */,
 				0438EF3D1B7416BB00D506CC /* STPPaymentCardTextFieldViewModel.m in Sources */,
 				04F94DD01D22A236004FC826 /* NSDecimalNumber+Stripe_Currency.m in Sources */,
 				F1852F961D80B6EC00367C86 /* STPStringUtils.m in Sources */,
