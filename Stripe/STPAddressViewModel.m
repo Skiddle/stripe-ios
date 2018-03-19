@@ -179,7 +179,7 @@
         return self.requiredBillingAddressFields == STPBillingAddressFieldsFull;
     }
     else {
-        return [self.requiredShippingAddressFields containsObject:STPContactFieldPostalAddress];
+        return ([self.requiredShippingAddressFields containsObject:STPContactFieldPostalAddress] || [self.requiredShippingAddressFields containsObject:STPContactFieldPostalAddressAllInOne]);
     }
 }
 
