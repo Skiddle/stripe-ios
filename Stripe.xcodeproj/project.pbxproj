@@ -23,6 +23,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		00BB983320601A1C00F257F9 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00BB983120601A1C00F257F9 /* UITextView+Placeholder.m */; };
+		00BB983420601A1C00F257F9 /* UITextView+Placeholder.h in Headers */ = {isa = PBXBuildFile; fileRef = 00BB983220601A1C00F257F9 /* UITextView+Placeholder.h */; };
 		0426B96E1CEADC98006AC8DD /* STPColorUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 0426B96C1CEADC98006AC8DD /* STPColorUtils.h */; };
 		0426B96F1CEADC98006AC8DD /* STPColorUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0426B96D1CEADC98006AC8DD /* STPColorUtils.m */; };
 		0426B9721CEAE3EB006AC8DD /* UITableViewCell+Stripe_Borders.h in Headers */ = {isa = PBXBuildFile; fileRef = 0426B9701CEAE3EB006AC8DD /* UITableViewCell+Stripe_Borders.h */; };
@@ -823,6 +825,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		00BB983120601A1C00F257F9 /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
+		00BB983220601A1C00F257F9 /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
 		0426B96C1CEADC98006AC8DD /* STPColorUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPColorUtils.h; sourceTree = "<group>"; };
 		0426B96D1CEADC98006AC8DD /* STPColorUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPColorUtils.m; sourceTree = "<group>"; };
 		0426B9701CEAE3EB006AC8DD /* UITableViewCell+Stripe_Borders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+Stripe_Borders.h"; sourceTree = "<group>"; };
@@ -1320,6 +1324,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00BB983020601A1C00F257F9 /* UITextView+Placeholder */ = {
+			isa = PBXGroup;
+			children = (
+				00BB983120601A1C00F257F9 /* UITextView+Placeholder.m */,
+				00BB983220601A1C00F257F9 /* UITextView+Placeholder.h */,
+			);
+			path = "UITextView+Placeholder";
+			sourceTree = "<group>";
+		};
 		0438EF871B741C2800D506CC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1504,6 +1517,7 @@
 		11C74B8D164043050071C2CA = {
 			isa = PBXGroup;
 			children = (
+				00BB983020601A1C00F257F9 /* UITextView+Placeholder */,
 				04CDB4D21A5F30A700B854EE /* Stripe */,
 				04CDB5281A5F3A9300B854EE /* StripeTests */,
 				C1B630B41D1D817900A05285 /* StripeiOSResources */,
@@ -2306,6 +2320,7 @@
 				04E39F541CECF7A100AF3B96 /* STPPaymentMethodTuple.h in Headers */,
 				F15232241EA9303800D65C67 /* STPURLCallbackHandler.h in Headers */,
 				C18410761EC2529400178149 /* STPEphemeralKeyManager.h in Headers */,
+				00BB983420601A1C00F257F9 /* UITextView+Placeholder.h in Headers */,
 				F1A7A0531FE053CE00B47D4A /* FauxPasAnnotations.h in Headers */,
 				04F416261CA3639500486FB5 /* STPAddCardViewController.h in Headers */,
 				049880FC1CED5A2300EA4FFD /* STPPaymentConfiguration.h in Headers */,
@@ -2988,6 +3003,7 @@
 				B3A2413B1FFEB57400A2F00D /* STPConnectAccountParams.m in Sources */,
 				F1D3A24F1EB012010095BFA9 /* STPMultipartFormDataPart.m in Sources */,
 				04827D121D2575C6002DB3E8 /* STPImageLibrary.m in Sources */,
+				00BB983320601A1C00F257F9 /* UITextView+Placeholder.m in Sources */,
 				04CDB5041A5F30A700B854EE /* STPFormEncoder.m in Sources */,
 				0426B96F1CEADC98006AC8DD /* STPColorUtils.m in Sources */,
 				C1D7B51C1E36B8B9002181F5 /* STPSourceParams.m in Sources */,
