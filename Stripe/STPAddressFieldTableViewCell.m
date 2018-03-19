@@ -14,7 +14,6 @@
 #import "STPPhoneNumberValidator.h"
 #import "STPPostalCodeValidator.h"
 #import "UIView+Stripe_SafeAreaBounds.h"
-#import "UITextView+Placeholder.h"
 
 @interface STPAddressFieldTableViewCell() <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 

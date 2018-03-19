@@ -14,6 +14,7 @@
 
 typedef NS_ENUM(NSInteger, STPAddressFieldType) {
     STPAddressFieldTypeName,
+    STPAddressFieldTypeAllInOne,
     STPAddressFieldTypeLine1,
     STPAddressFieldTypeLine2,
     STPAddressFieldTypeCity,
