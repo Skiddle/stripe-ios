@@ -203,6 +203,9 @@ STPContactField const STPContactFieldName = @"STPContactFieldName";
     if ([requiredFields containsObject:STPContactFieldPostalAddress]) {
         containsFields = containsFields && [self hasValidPostalAddress];
     }
+    if ([requiredFields containsObject:STPContactFieldPostalAddressAllInOne]) {
+        containsFields = containsFields && [self hasValidPostalAddress];
+    }
     return containsFields;
 }
 
@@ -210,7 +213,8 @@ STPContactField const STPContactFieldName = @"STPContactFieldName";
     return (([desiredFields containsObject:STPContactFieldName] && self.name.length > 0)
             || ([desiredFields containsObject:STPContactFieldEmailAddress] && self.email.length > 0)
             || ([desiredFields containsObject:STPContactFieldPhoneNumber] && self.phone.length > 0)
-            || ([desiredFields containsObject:STPContactFieldPostalAddress] && [self hasPartialPostalAddress]));
+            || ([desiredFields containsObject:STPContactFieldPostalAddress] && [self hasPartialPostalAddress])
+            || ([desiredFields containsObject:STPContactFieldPostalAddressAllInOne] && [self hasPartialPostalAddress]));
 }
 
 - (BOOL)hasValidPostalAddress {
