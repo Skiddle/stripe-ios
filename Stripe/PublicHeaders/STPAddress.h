@@ -35,6 +35,7 @@ typedef NS_ENUM(NSUInteger, STPBillingAddressFields) {
      Request the user's full billing address
      */
     STPBillingAddressFieldsFull,
+    STPBillingAddressFieldsFullAllInOne,
 };
 
 
@@ -42,6 +43,11 @@ typedef NS_ENUM(NSUInteger, STPBillingAddressFields) {
  Constants that represent different parts of a users contact/address information.
  */
 typedef NSString * STPContactField NS_STRING_ENUM;
+
+/**
+ The contact's full physical address.
+ */
+extern STPContactField const STPContactFieldPostalAddressAllInOne;
 
 /**
  The contact's full physical address.
@@ -72,6 +78,11 @@ extern STPContactField const STPContactFieldName;
  The user's full name (e.g. "Jane Doe")
  */
 @property (nonatomic, copy, nullable) NSString *name;
+
+/**
+ The full user's address all in one
+ */
+@property (nonatomic, copy, nullable) NSString *allInOne;
 
 /**
  The first line of the user's street address (e.g. "123 Fake St")

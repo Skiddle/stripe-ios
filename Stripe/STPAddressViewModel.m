@@ -52,6 +52,14 @@
                                   [[STPAddressFieldTableViewCell alloc] initWithType:STPAddressFieldTypeCountry contents:_addressFieldTableViewCountryCode lastInList:YES delegate:self],
                                   ];
                 break;
+            case STPBillingAddressFieldsFullAllInOne:
+                _addressCells = @[
+                                  [[STPAddressFieldTableViewCell alloc] initWithType:STPAddressFieldTypeName contents:@"" lastInList:NO delegate:self],
+                                  [[STPAddressFieldTableViewCell alloc] initWithType:STPAddressFieldTypeAllInOne contents:@"" lastInList:NO delegate:self],
+                                  // Postal code cell will be added here later if necessary
+                                  [[STPAddressFieldTableViewCell alloc] initWithType:STPAddressFieldTypeCountry contents:_addressFieldTableViewCountryCode lastInList:YES delegate:self],
+                                  ];
+                break;
         }
         [self commonInit];
     }
@@ -78,6 +86,18 @@
                                              // Postal code cell will be added here later if necessary
                                              [[STPAddressFieldTableViewCell alloc] initWithType:STPAddressFieldTypeCity contents:@"" lastInList:NO delegate:self],
                                              [[STPAddressFieldTableViewCell alloc] initWithType:STPAddressFieldTypeState contents:@"" lastInList:NO delegate:self],
+                                             [[STPAddressFieldTableViewCell alloc] initWithType:STPAddressFieldTypeCountry contents:_addressFieldTableViewCountryCode lastInList:NO delegate:self],
+                                             ] mutableCopy];
+            if ([requiredShippingAddressFields containsObject:STPContactFieldName]) {
+                [postalCells removeObjectAtIndex:0];
+            }
+            [cells addObjectsFromArray:postalCells];
+        }
+        if ([requiredShippingAddressFields containsObject:STPContactFieldPostalAddressAllInOne]) {
+            NSMutableArray *postalCells = [@[
+                                             [[STPAddressFieldTableViewCell alloc] initWithType:STPAddressFieldTypeName contents:@"" lastInList:NO delegate:self],
+                                             [[STPAddressFieldTableViewCell alloc] initWithType:STPAddressFieldTypeAllInOne contents:@"" lastInList:NO delegate:self],
+                                             // Postal code cell will be added here later if necessary
                                              [[STPAddressFieldTableViewCell alloc] initWithType:STPAddressFieldTypeCountry contents:_addressFieldTableViewCountryCode lastInList:NO delegate:self],
                                              ] mutableCopy];
             if ([requiredShippingAddressFields containsObject:STPContactFieldName]) {
@@ -272,6 +292,9 @@
             case STPAddressFieldTypeName:
                 cell.contents = address.name;
                 break;
+            case STPAddressFieldTypeAllInOne:
+                cell.contents = address.allInOne;
+                break;
             case STPAddressFieldTypeLine1:
                 cell.contents = address.line1;
                 break;
@@ -307,6 +330,9 @@
         switch (cell.type) {
             case STPAddressFieldTypeName:
                 address.name = cell.contents;
+                break;
+            case STPAddressFieldTypeAllInOne:
+                address.allInOne = cell.contents;
                 break;
             case STPAddressFieldTypeLine1:
                 address.line1 = cell.contents;

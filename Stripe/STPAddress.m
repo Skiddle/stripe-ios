@@ -19,7 +19,7 @@
 
 NSString *stringIfHasContentsElseNil(NSString *string);
 
-
+STPContactField const STPContactFieldPostalAddressAllInOne = @"STPContactFieldPostalAddressAllInOne";
 STPContactField const STPContactFieldPostalAddress = @"STPContactFieldPostalAddress";
 STPContactField const STPContactFieldEmailAddress = @"STPContactFieldEmailAddress";
 STPContactField const STPContactFieldPhoneNumber = @"STPContactFieldPhoneNumber";
@@ -168,6 +168,7 @@ STPContactField const STPContactFieldName = @"STPContactFieldName";
             return ([STPPostalCodeValidator validationStateForPostalCode:self.postalCode
                                                              countryCode:self.country] == STPCardValidationStateValid);
         case STPBillingAddressFieldsFull:
+        case STPBillingAddressFieldsFullAllInOne:
             return [self hasValidPostalAddress];
     }
     return containsFields;
@@ -180,6 +181,7 @@ STPContactField const STPContactFieldName = @"STPContactFieldName";
         case STPBillingAddressFieldsZip:
             return self.postalCode.length > 0;
         case STPBillingAddressFieldsFull:
+        case STPBillingAddressFieldsFullAllInOne:
             return [self hasPartialPostalAddress];
     }
 
@@ -212,7 +214,8 @@ STPContactField const STPContactFieldName = @"STPContactFieldName";
 }
 
 - (BOOL)hasValidPostalAddress {
-    return (self.line1.length > 0 
+    return (self.allInOne.length > 0
+            && self.line1.length > 0
             && self.city.length > 0 
             && self.country.length > 0 
             && (self.state.length > 0 || ![self.country isEqualToString:@"US"])  
@@ -227,7 +230,8 @@ STPContactField const STPContactFieldName = @"STPContactFieldName";
  single field will return YES.
  */
 - (BOOL)hasPartialPostalAddress {
-    return (self.line1.length > 0
+    return (self.allInOne.length > 0
+            || self.line1.length > 0
             || self.line2.length > 0
             || self.city.length > 0
             || self.country.length > 0
@@ -241,6 +245,7 @@ STPContactField const STPContactFieldName = @"STPContactFieldName";
             return PKAddressFieldNone;
         case STPBillingAddressFieldsZip:
         case STPBillingAddressFieldsFull:
+        case STPBillingAddressFieldsFullAllInOne:
             return PKAddressFieldPostalAddress;
     }
 }

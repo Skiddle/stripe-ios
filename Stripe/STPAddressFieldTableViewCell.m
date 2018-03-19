@@ -14,10 +14,12 @@
 #import "STPPhoneNumberValidator.h"
 #import "STPPostalCodeValidator.h"
 #import "UIView+Stripe_SafeAreaBounds.h"
+#import "UITextView+Placeholder.h"
 
 @interface STPAddressFieldTableViewCell() <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (nonatomic, weak) STPValidatedTextField *textField;
+@property (nonatomic, weak) UITextView *textView;
 @property (nonatomic) UIToolbar *inputAccessoryToolbar;
 @property (nonatomic) UIPickerView *countryPickerView;
 @property (nonatomic, strong) NSArray *countryCodes;
@@ -39,23 +41,34 @@
         _theme = [STPTheme new];
         _contents = contents;
 
-        STPValidatedTextField *textField;
-        if (type == STPAddressFieldTypePhone) {
-            // We have very specific US-based phone formatting that's built into STPFormTextField
-            STPFormTextField *formTextField = [[STPFormTextField alloc] init];
-            formTextField.preservesContentsOnPaste = NO;
-            formTextField.selectionEnabled = NO;
-            textField = formTextField;
+        if (type != STPAddressFieldTypeAllInOne) {
+            STPValidatedTextField *textField;
+            if (type == STPAddressFieldTypePhone) {
+                // We have very specific US-based phone formatting that's built into STPFormTextField
+                STPFormTextField *formTextField = [[STPFormTextField alloc] init];
+                formTextField.preservesContentsOnPaste = NO;
+                formTextField.selectionEnabled = NO;
+                textField = formTextField;
+            }
+            else {
+                textField = [[STPValidatedTextField alloc] init];
+            }
+            textField.delegate = self;
+            [textField addTarget:self
+                          action:@selector(textFieldTextDidChange:)
+                forControlEvents:UIControlEventEditingChanged];
+            _textField = textField;
+            [self.contentView addSubview:textField];
         }
         else {
-            textField = [[STPValidatedTextField alloc] init];
+            UITextView *textView = [[UITextView alloc] init];
+            //textView.delegate = self;
+            /*[textView addTarget:self
+                          action:@selector(textFieldTextDidChange:)
+                forControlEvents:UIControlEventEditingChanged];*/
+            _textView = textView;
+            [self.contentView addSubview:textView];
         }
-        textField.delegate = self;
-        [textField addTarget:self
-                      action:@selector(textFieldTextDidChange:)
-            forControlEvents:UIControlEventEditingChanged];
-        _textField = textField;
-        [self.contentView addSubview:textField];
         
         UIToolbar *toolbar = [UIToolbar new];
         UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
@@ -92,7 +105,12 @@
         
         _lastInList = lastInList;
         _type = type;
-        self.textField.text = contents;
+        if (type != STPAddressFieldTypeAllInOne) {
+            self.textField.text = contents;
+        }
+        else {
+            self.textView.text = contents;
+        }
 
         NSString *ourCountryCode = nil;
         if ([self.delegate respondsToSelector:@selector(addressFieldTableViewCountryCode)]) {
@@ -119,18 +137,31 @@
 }
 
 - (void)updateTextFieldsAndCaptions {
-    self.textField.placeholder = [self placeholderForAddressField:self.type];
+    if (self.type != STPAddressFieldTypeAllInOne) {
+        self.textField.placeholder = [self placeholderForAddressField:self.type];
+    }
+    else {
+        self.textView.placeholder = [self placeholderForAddressField:self.type];
+    }
     if (!self.lastInList) {
         self.textField.returnKeyType = UIReturnKeyNext;
+        self.textView.returnKeyType = UIReturnKeyNext;
     }
     else {
         self.textField.returnKeyType = UIReturnKeyDefault;
+        self.textView.returnKeyType = UIReturnKeyDefault;
     }
     switch (self.type) {
         case STPAddressFieldTypeName: 
             self.textField.keyboardType = UIKeyboardTypeDefault;
             if (@available(iOS 10.0, *)) {
                 self.textField.textContentType = UITextContentTypeName;
+            }
+            break;
+        case STPAddressFieldTypeAllInOne:
+            self.textView.keyboardType = UIKeyboardTypeDefault;
+            if (@available(iOS 10.0, *)) {
+                self.textView.textContentType = UITextContentTypeFullStreetAddress;
             }
             break;
         case STPAddressFieldTypeLine1: 
@@ -237,6 +268,8 @@
     switch (addressFieldType) {
         case STPAddressFieldTypeName:
             return STPLocalizedString(@"Name", @"Caption for Name field on address form");
+        case STPAddressFieldTypeAllInOne:
+            return STPLocalizedString(@"Full Address", @"Caption for Full Address field on address form");
         case STPAddressFieldTypeLine1:
             return STPLocalizedString(@"Address", @"Caption for Address field on address form");
         case STPAddressFieldTypeLine2:
@@ -271,10 +304,18 @@
 - (void)updateAppearance {
     self.backgroundColor = self.theme.secondaryBackgroundColor;
     self.contentView.backgroundColor = [UIColor clearColor];
-    self.textField.placeholderColor = self.theme.tertiaryForegroundColor;
-    self.textField.defaultColor = self.theme.primaryForegroundColor;
-    self.textField.errorColor = self.theme.errorColor;
-    self.textField.font = self.theme.font;
+    
+    if (self.type != STPAddressFieldTypeAllInOne) {
+        self.textField.placeholderColor = self.theme.tertiaryForegroundColor;
+        self.textField.defaultColor = self.theme.primaryForegroundColor;
+        self.textField.errorColor = self.theme.errorColor;
+        self.textField.font = self.theme.font;
+    }
+    else {
+        self.textView.placeholderColor = self.theme.tertiaryForegroundColor;
+        self.textView.textColor = self.theme.primaryForegroundColor;
+        self.textView.font = self.theme.font;
+    }
     [self setNeedsLayout];
 }
 
@@ -286,12 +327,24 @@
     [super layoutSubviews];
     CGRect bounds = [self stp_boundsWithHorizontalSafeAreaInsets];
     CGFloat textFieldX = 15;
-    self.textField.frame = CGRectMake(textFieldX, 1, bounds.size.width - textFieldX, bounds.size.height - 1);
-    self.inputAccessoryToolbar.frame = CGRectMake(0, 0, bounds.size.width, 44);
+    if (self.type != STPAddressFieldTypeAllInOne) {
+        self.textField.frame = CGRectMake(textFieldX, 1, bounds.size.width - textFieldX, bounds.size.height - 1);
+        self.inputAccessoryToolbar.frame = CGRectMake(0, 0, bounds.size.width, 44);
+    }
+    else {
+        self.textView.frame = CGRectMake(11, 1, bounds.size.width - textFieldX, bounds.size.height - 1);
+        self.inputAccessoryToolbar.frame = CGRectMake(0, 0, bounds.size.width, 120);
+
+    }
 }
 
 - (BOOL)becomeFirstResponder {
-    return [self.textField becomeFirstResponder];
+    if (self.type != STPAddressFieldTypeAllInOne) {
+        return [self.textField becomeFirstResponder];
+    }
+    else {
+        return [self.textView becomeFirstResponder];
+    }
 }
 
 - (void)nextTapped:(__unused id)sender {
@@ -300,6 +353,7 @@
     }
 }
 
+// ----------- CONTINUE FROM HERE
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldTextDidChange:(STPValidatedTextField *)textField {
@@ -361,6 +415,7 @@
 - (BOOL)validContents {
     switch (self.type) {
         case STPAddressFieldTypeName:
+        case STPAddressFieldTypeAllInOne:
         case STPAddressFieldTypeLine1:
         case STPAddressFieldTypeCity:
         case STPAddressFieldTypeState:
@@ -382,6 +437,7 @@
 - (BOOL)potentiallyValidContents {
     switch (self.type) {
         case STPAddressFieldTypeName:
+        case STPAddressFieldTypeAllInOne:
         case STPAddressFieldTypeLine1:
         case STPAddressFieldTypeCity:
         case STPAddressFieldTypeState:

@@ -328,6 +328,16 @@
     [cell stp_setFakeSeparatorLeftInset:15.0f];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    STPAddressFieldTableViewCell *cell = (STPAddressFieldTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    if (cell != nil) {
+        if (cell.type == STPAddressFieldTypeAllInOne) {
+            return 120;
+        }
+    }
+    return 44;
+}
+
 - (CGFloat)tableView:(__unused UITableView *)tableView heightForFooterInSection:(__unused NSInteger)section {
     return 0.01f;
 }
