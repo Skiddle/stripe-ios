@@ -338,6 +338,12 @@
         if (cell.type == STPAddressFieldTypeAllInOne) {
             return 120;
         }
+        if (cell.type == STPAddressFieldTypeName) {
+            cell.userInteractionEnabled = false;
+        }
+        else {
+            cell.userInteractionEnabled = true;
+        }
     }
     return 44;
 }
