@@ -134,10 +134,19 @@
             [self.delegate addressViewModelDidChange:self];
         }
         else if (self.containsStateAndPostalFields) {
-            // Add before city
-            NSUInteger stateFieldIndex = [self.addressCells indexOfObjectPassingTest:^BOOL(STPAddressFieldTableViewCell * _Nonnull obj, NSUInteger __unused idx, BOOL * _Nonnull __unused stop) {
-                return (obj.type == STPAddressFieldTypeCity);
-            }];
+            NSUInteger stateFieldIndex = NSNotFound;
+            if ([self.requiredShippingAddressFields containsObject:STPContactFieldPostalAddressAllInOne]) {
+                // Add before country
+                stateFieldIndex = [self.addressCells indexOfObjectPassingTest:^BOOL(STPAddressFieldTableViewCell * _Nonnull obj, NSUInteger __unused idx, BOOL * _Nonnull __unused stop) {
+                    return (obj.type == STPAddressFieldTypeCountry);
+                }];
+            }
+            else {
+                // Add before city
+                stateFieldIndex = [self.addressCells indexOfObjectPassingTest:^BOOL(STPAddressFieldTableViewCell * _Nonnull obj, NSUInteger __unused idx, BOOL * _Nonnull __unused stop) {
+                    return (obj.type == STPAddressFieldTypeCity);
+                }];
+            }
 
             if (stateFieldIndex != NSNotFound) {
                 NSUInteger zipFieldIndex = stateFieldIndex;
