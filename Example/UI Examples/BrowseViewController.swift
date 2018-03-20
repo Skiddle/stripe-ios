@@ -105,7 +105,7 @@ class BrowseViewController: UITableViewController, STPAddCardViewControllerDeleg
             present(navigationController, animated: true, completion: nil)
         case .STPShippingInfoViewController:
             let config = STPPaymentConfiguration()
-            config.requiredShippingAddressFields = [.postalAddress]
+            config.requiredShippingAddressFields = [.postalAddressAllInOne]
             let viewController = STPShippingAddressViewController(configuration: config,
                                                                   theme: theme,
                                                                   currency: "usd",

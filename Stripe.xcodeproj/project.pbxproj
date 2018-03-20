@@ -3141,6 +3141,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 04F39F101AEF2AFE005B926E /* StripeiOS-Debug.xcconfig */;
 			buildSettings = {
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wundef",
+					"-Wfloat-equal",
+				);
 			};
 			name = Debug;
 		};
@@ -3148,6 +3155,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 04F39F111AEF2AFE005B926E /* StripeiOS-Release.xcconfig */;
 			buildSettings = {
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wundef",
+					"-Wfloat-equal",
+				);
 			};
 			name = Release;
 		};

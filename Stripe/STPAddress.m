@@ -218,11 +218,11 @@ STPContactField const STPContactFieldName = @"STPContactFieldName";
 }
 
 - (BOOL)hasValidPostalAddress {
-    return (self.allInOne.length > 0
-            && self.line1.length > 0
+        return (((self.allInOne.length > 0)
+            || (self.line1.length > 0
             && self.city.length > 0 
             && self.country.length > 0 
-            && (self.state.length > 0 || ![self.country isEqualToString:@"US"])  
+            && (self.state.length > 0 || ![self.country isEqualToString:@"US"])))
             && ([STPPostalCodeValidator validationStateForPostalCode:self.postalCode
                                                          countryCode:self.country] == STPCardValidationStateValid));
 }

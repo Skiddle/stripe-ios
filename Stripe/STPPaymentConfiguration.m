@@ -90,6 +90,9 @@
         case STPBillingAddressFieldsFull:
             requiredBillingAddressFieldsDescription = @"STPBillingAddressFieldsFull";
             break;
+        case STPBillingAddressFieldsFullAllInOne:
+            requiredBillingAddressFieldsDescription = @"STPBillingAddressFieldsFullAllInOne";
+            break;
     }
 
     NSString *requiredShippingAddressFieldsDescription = [self.requiredShippingAddressFields.allObjects componentsJoinedByString:@"|"];

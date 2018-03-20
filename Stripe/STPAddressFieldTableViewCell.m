@@ -366,9 +366,7 @@
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
-    if (self.type != STPAddressFieldTypeCountry) {
-        _contents = textView.text;
-    }
+    _contents = textView.text;
     [self.delegate addressFieldTableViewCellDidUpdateText:self];
 }
 
