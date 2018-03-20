@@ -143,7 +143,7 @@ static NSString *const STPShippingMethodCellReuseIdentifier = @"STPShippingMetho
 
 - (CGFloat)tableView:(__unused UITableView *)tableView heightForHeaderInSection:(__unused NSInteger)section {
     CGSize size = [self.headerView sizeThatFits:CGSizeMake(self.view.bounds.size.width, CGFLOAT_MAX)];
-    return size.height;
+    return MAX(size.height, 52);
 }
 
 - (UIView *)tableView:(__unused UITableView *)tableView viewForHeaderInSection:(__unused NSInteger)section {

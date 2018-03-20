@@ -351,8 +351,13 @@
 }
 
 - (CGFloat)tableView:(__unused UITableView *)tableView heightForHeaderInSection:(__unused NSInteger)section {
-    CGSize size = [self.addressHeaderView sizeThatFits:CGSizeMake(self.view.bounds.size.width, CGFLOAT_MAX)];
-    return size.height;
+    if ([self.configuration.requiredShippingAddressFields containsObject:STPContactFieldPostalAddressAllInOne]) {
+        return 52;
+    }
+    else {
+        CGSize size = [self.addressHeaderView sizeThatFits:CGSizeMake(self.view.bounds.size.width, CGFLOAT_MAX)];
+        return size.height;
+    }
 }
 
 - (UIView *)tableView:(__unused UITableView *)tableView viewForHeaderInSection:(__unused NSInteger)section {
@@ -382,7 +387,7 @@
         }
     }
     else if ([self.configuration.requiredShippingAddressFields containsObject:STPContactFieldPostalAddressAllInOne]) {
-        return STPLocalizedString(@"Delivery", @"Title for delivery info form");
+        return STPLocalizedString(@"Address", @"Title for delivery info form");
     }
     else {
         return STPLocalizedString(@"Contact", @"Title for contact info form");
