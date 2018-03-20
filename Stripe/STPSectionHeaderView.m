@@ -83,7 +83,7 @@
         CGFloat heightThatFits = [self heightThatFits:bounds.size];
         self.label.frame = CGRectMake(bounds.origin.x,
                                       bounds.origin.y,
-                                      halfWidth,
+                                      bounds.size.width,
                                       heightThatFits);
         self.button.frame = CGRectMake(bounds.origin.x + halfWidth,
                                        bounds.origin.y,

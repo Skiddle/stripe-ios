@@ -118,11 +118,13 @@
     self.stp_navigationItemProxy.rightBarButtonItem = nextItem;
     self.stp_navigationItemProxy.rightBarButtonItem.enabled = NO;
 
+    /*
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[STPImageLibrary largeShippingImage]];
     imageView.contentMode = UIViewContentModeCenter;
     imageView.frame = CGRectMake(0, 0, self.view.bounds.size.width, imageView.bounds.size.height + (57 * 2));
     self.imageView = imageView;
     self.tableView.tableHeaderView = imageView;
+     */
 
     self.activityIndicator = [[STPPaymentActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20.0f, 20.0f)];
 
@@ -377,6 +379,9 @@
                 break;
         }
     }
+    else if ([self.configuration.requiredShippingAddressFields containsObject:STPContactFieldPostalAddressAllInOne]) {
+        return STPLocalizedString(@"Delivery", @"Title for delivery info form");
+    }
     else {
         return STPLocalizedString(@"Contact", @"Title for contact info form");
     }
@@ -392,6 +397,9 @@
                 return STPLocalizedString(@"Delivery Address", @"Title for delivery address entry section");
                 break;
         }
+    }
+    else if ([self.configuration.requiredShippingAddressFields containsObject:STPContactFieldPostalAddressAllInOne]) {
+        return STPLocalizedString(@"Please enter your delivery address:", @"Title for delivery address info form");
     }
     else {
         return STPLocalizedString(@"Contact", @"Title for contact info form");
