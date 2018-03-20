@@ -172,8 +172,10 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self stp_beginObservingKeyboardAndInsettingScrollView:self.tableView
+    /* REMOVED TO PREVENT KEYBOARD CONFLICT WITH IQKEYBOARDMANAGER
+     [self stp_beginObservingKeyboardAndInsettingScrollView:self.tableView
                                              onChangeBlock:nil];
+     */
     [[self firstEmptyField] becomeFirstResponder];
 }
 

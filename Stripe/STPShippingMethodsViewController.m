@@ -48,7 +48,7 @@ static NSString *const STPShippingMethodCellReuseIdentifier = @"STPShippingMetho
         }
 
         _currency = currency;
-        self.title = STPLocalizedString(@"Shipping", @"Title for shipping info form");
+        self.title = STPLocalizedString(@"Delivery", @"Title for shipping info form");
     }
     return self;
 }
@@ -62,19 +62,21 @@ static NSString *const STPShippingMethodCellReuseIdentifier = @"STPShippingMetho
     self.doneItem = doneItem;
     self.stp_navigationItemProxy.rightBarButtonItem = doneItem;
 
+    /*
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[STPImageLibrary largeShippingImage]];
     imageView.contentMode = UIViewContentModeCenter;
     imageView.frame = CGRectMake(0, 0, self.view.bounds.size.width, imageView.bounds.size.height + (57 * 2));
     self.imageView = imageView;
-
     self.tableView.tableHeaderView = imageView;
+    */
+    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
     STPSectionHeaderView *headerView = [STPSectionHeaderView new];
     headerView.theme = self.theme;
     headerView.buttonHidden = YES;
-    headerView.title = STPLocalizedString(@"Shipping Method", @"Label for shipping method form");
+    headerView.title = STPLocalizedString(@"Please select delivery method:", @"Label for shipping method form");
     [headerView setNeedsLayout];
     self.headerView = headerView;
 }
