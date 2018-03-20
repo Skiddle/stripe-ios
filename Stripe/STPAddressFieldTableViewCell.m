@@ -16,7 +16,7 @@
 #import "UIView+Stripe_SafeAreaBounds.h"
 #import "UITextView+Placeholder.h"
 
-@interface STPAddressFieldTableViewCell() <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface STPAddressFieldTableViewCell() <UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (nonatomic, weak) STPValidatedTextField *textField;
 @property (nonatomic, weak) UITextView *textView;
@@ -62,10 +62,7 @@
         }
         else {
             UITextView *textView = [[UITextView alloc] init];
-            //textView.delegate = self;
-            /*[textView addTarget:self
-                          action:@selector(textFieldTextDidChange:)
-                forControlEvents:UIControlEventEditingChanged];*/
+            textView.delegate = self;
             _textView = textView;
             [self.contentView addSubview:textView];
         }
@@ -269,7 +266,7 @@
         case STPAddressFieldTypeName:
             return STPLocalizedString(@"Name", @"Caption for Name field on address form");
         case STPAddressFieldTypeAllInOne:
-            return STPLocalizedString(@"Full Address", @"Caption for Full Address field on address form");
+            return STPLocalizedString(@"Address", @"Caption for Address field on address form");
         case STPAddressFieldTypeLine1:
             return STPLocalizedString(@"Address", @"Caption for Address field on address form");
         case STPAddressFieldTypeLine2:
@@ -354,7 +351,7 @@
 }
 
 // ----------- CONTINUE FROM HERE
-#pragma mark - UITextFieldDelegate
+#pragma mark - UITextFieldDelegate & UITextViewDelegate
 
 - (void)textFieldTextDidChange:(STPValidatedTextField *)textField {
     if (self.type != STPAddressFieldTypeCountry) {
@@ -364,6 +361,13 @@
         } else {
             textField.validText = [self validContents];
         }
+    }
+    [self.delegate addressFieldTableViewCellDidUpdateText:self];
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+    if (self.type != STPAddressFieldTypeCountry) {
+        _contents = textView.text;
     }
     [self.delegate addressFieldTableViewCellDidUpdateText:self];
 }
@@ -382,12 +386,28 @@
     }
 }
 
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    if ([self.delegate respondsToSelector:@selector(addressFieldTableViewCellDidEndEditing:)]) {
+        [self.delegate addressFieldTableViewCellDidEndEditing:self];
+    }
+}
+
 - (void)setCaption:(NSString *)caption {
-    self.textField.placeholder = caption;
+    if (self.type == STPAddressFieldTypeAllInOne) {
+        self.textView.placeholder = caption;
+    }
+    else {
+        self.textField.placeholder = caption;
+    }
 }
 
 - (NSString *)caption {
-    return self.textField.placeholder;
+    if (self.type == STPAddressFieldTypeAllInOne) {
+        return self.textView.placeholder;
+    }
+    else {
+        return self.textField.placeholder;
+    }
 }
 
 - (NSString *)contents {
@@ -402,7 +422,12 @@
     if (self.type == STPAddressFieldTypeCountry) {
         [self updateTextFieldsAndCaptions];
     } else {
-        self.textField.text = contents;
+        if (self.type == STPAddressFieldTypeAllInOne) {
+            self.textView.text = contents;
+        }
+        else {
+            self.textField.text = contents;
+        }
     }
     if ([self.textField isFirstResponder]) {
         self.textField.validText = [self potentiallyValidContents];
