@@ -316,9 +316,17 @@
 
 - (UITableViewCell *)tableView:(__unused UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [self.addressViewModel.addressCells stp_boundSafeObjectAtIndex:indexPath.row];
+    STPAddressFieldTableViewCell *cell = [self.addressViewModel.addressCells stp_boundSafeObjectAtIndex:indexPath.row];
     cell.backgroundColor = self.theme.secondaryBackgroundColor;
     cell.contentView.backgroundColor = [UIColor clearColor];
+    
+    if (cell.type == STPAddressFieldTypeName) {
+        cell.userInteractionEnabled = false;
+    }
+    else {
+        cell.userInteractionEnabled = true;
+    }
+    
     return cell;
 }
 
@@ -333,17 +341,8 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    STPAddressFieldTableViewCell *cell = (STPAddressFieldTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
-    if (cell != nil) {
-        if (cell.type == STPAddressFieldTypeAllInOne) {
-            return 120;
-        }
-        if (cell.type == STPAddressFieldTypeName) {
-            cell.userInteractionEnabled = false;
-        }
-        else {
-            cell.userInteractionEnabled = true;
-        }
+    if (indexPath.row == 1) {
+        return 120; // for single line address - TEMP FIX
     }
     return 44;
 }
