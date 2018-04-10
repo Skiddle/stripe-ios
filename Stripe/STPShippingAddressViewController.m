@@ -316,17 +316,9 @@
 
 - (UITableViewCell *)tableView:(__unused UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    STPAddressFieldTableViewCell *cell = [self.addressViewModel.addressCells stp_boundSafeObjectAtIndex:indexPath.row];
+    UITableViewCell *cell = [self.addressViewModel.addressCells stp_boundSafeObjectAtIndex:indexPath.row];
     cell.backgroundColor = self.theme.secondaryBackgroundColor;
     cell.contentView.backgroundColor = [UIColor clearColor];
-    
-    if (cell.type == STPAddressFieldTypeName) {
-        cell.userInteractionEnabled = false;
-    }
-    else {
-        cell.userInteractionEnabled = true;
-    }
-    
     return cell;
 }
 
